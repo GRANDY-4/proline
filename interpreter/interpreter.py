@@ -1,4 +1,5 @@
 import shlex as s
+import time as t
 
 variables = {}
 
@@ -50,6 +51,15 @@ def run(file):
             # normal value
             else:
                 variables[name] = parts[2]
+
+        elif parts[0] == "if":
+            if parts[2] == "is":
+                if variables[parts[1]] == parts[3]:
+                    continue
+                else:
+                    while not line == "end":
+                        pass
+                
 
         # unknown command
         else:
