@@ -19,6 +19,11 @@ def run(file):
 
         parts = s.split(line)
 
+        if skip:
+            if parts[0] == "end":
+                skip = False
+            continue
+
         if not parts:
             index += 1
             continue
@@ -53,12 +58,16 @@ def run(file):
                 variables[name] = parts[2]
 
         elif parts[0] == "if":
+            if len(parts) < 4:
+                print(f"Fatal Code Error: Invalid if statement at L: {index}")
+                index += 1
+                continue
+
             if parts[2] == "is":
-                if variables[parts[1]] == parts[3]:
-                    continue
-                else:
-                    while not line == "end":
-                        pass
+                variable = variables.get(parts[1])
+
+                if variable != parts[3]:
+                    skip = True
                 
 
         # unknown command
